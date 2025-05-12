@@ -18,7 +18,7 @@ function add_user($username, $password)
 
     // Utför frågan
     mysqli_stmt_execute($statment);
-   
+
     // Stäng statementet när vi är klara
     mysqli_stmt_close($statment);
 }
@@ -26,16 +26,15 @@ function add_user($username, $password)
 /**
  * Tar in ett statement som har körts, hämtar resultatet och lägger
  * resultatet i en array med rader där varje rad innehåller en array med fält
-*/
+ */
 function get_result($statment)
 {
     $rows = array();
     $result = mysqli_stmt_get_result($statment);
-    if($result) // Finns resultat
+    if ($result) // Finns resultat
     {
         // Hämta rad för rad ur resultatet och lägg in i $row
-        while ($row = mysqli_fetch_assoc($result))
-        {
+        while ($row = mysqli_fetch_assoc($result)) {
             $rows[] = $row;
         }
     }
@@ -122,21 +121,18 @@ function delete_post($id)
  * @param $filename
  * @param $dropOldTables - skicka in TRUE om alla tabeller som finns ska tas bort
  */
-function import($filename, $dropOldTables=FALSE)
+function import($filename, $dropOldTables = FALSE)
 {
     global $connection;
     // Om $dropOldTables är TRUE så ska vi ta bort alla gamla tabeller
-    if ($dropOldTables)
-    {
+    if ($dropOldTables) {
         // Börjar med att hämta eventuella tabeller som finns i databasen
         $query = 'SHOW TABLES';
         $result = mysqli_query($connection, $query);
         // Om några tabeller hämtats
-        if ($result)
-        {
+        if ($result) {
             // Hämta rad för rad ur resultatet
-            while ($row = mysqli_fetch_row($result))
-            {
+            while ($row = mysqli_fetch_row($result)) {
                 $query = 'DROP TABLE ' . $row[0];
                 if (mysqli_query($connection, $query))
                     echo 'Tabellen <strong>' . $row[0] . '</strong> togs bort<br>';
@@ -167,4 +163,18 @@ function import($filename, $dropOldTables=FALSE)
         }
     }
     echo 'Importeringen är klar!<br>';
+}
+
+function get_posts()
+{
+    global $connection;
+    $sql = 'SELECT post.title, post.content, post.created, post.userId 
+            FROM post 
+            JOIN user ON post.userId = post.id 
+            ORDER BY post.created DESC';
+    $statement = mysqli_prepare($connection, $sql);
+    mysqli_stmt_execute($statement);
+    $result = get_result($statement);
+    mysqli_stmt_close($statement);
+    return $result;
 }

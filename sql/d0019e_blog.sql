@@ -20,9 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Database: `d0019e_blog`
 --
-
+use d0019e_blog;
 -- --------------------------------------------------------
-
+-- Delete tables
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS user;
 --
 -- Table structure for table `image`
 --
@@ -128,6 +131,31 @@ ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
 COMMIT;
 
+--
+-- Insert data into tables
+--
+
+--
+-- insert into user
+--
+-- Insert a sample user into the user table
+INSERT INTO user (username, password, title, presentation, image, created)
+VALUES
+    ('hassan', '123', 'Mr.', 'A passionate blogger.', 'default.jpg', NOW()),
+     ('ali', '123', 'Mr.', 'A dedicated blogger.', 'default.jpg', NOW());
+
+--
+-- Insert data into database table post
+--
+
+-- Insert sample posts into the posts table
+INSERT INTO post (title, content, created, userId)
+VALUES
+    ('First Blog Post', 'This is the content of the first blog post.', NOW(), 1),
+    ('Second Blog Post', 'Here is the content for the second blog post.', NOW(), 1),
+    ('Third Blog Post', 'This is the content of the third blog post.', NOW(), 1);
+    
+    
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
