@@ -218,3 +218,32 @@ function insert_image($filename, $description, $postId)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
+function get_all_posts()
+{
+    global $connection;
+    $sql = 'SELECT post.id, post.title, post.content, post.created, user.username
+            FROM post
+            JOIN user ON post.userId = user.id
+            ORDER BY post.created DESC';
+    $statement = mysqli_prepare($connection, $sql);
+    mysqli_stmt_execute($statement);
+    $result = get_result($statement);
+    mysqli_stmt_close($statement);
+    return $result;
+}
+
+function get_single_post($postId) {
+    global $connection;
+    $sql = "SELECT post.*, user.username 
+            FROM post 
+            JOIN user ON post.userId = user.id 
+            WHERE post.id = ?";
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $postId);
+    mysqli_stmt_execute($stmt);
+    $result = get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $result[0] ?? null;
+}

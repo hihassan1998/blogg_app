@@ -371,7 +371,7 @@ a {
     padding: 20px;
 }
 
-.price {
+.blog-title {
     font-size: 1.5rem;
     color: #FFCD00;
     font-weight: bold;
@@ -382,4 +382,33 @@ a {
 /* form styling */
 .label {
     margin-bottom: 50px;
+}
+
+/* aside and posts stylings */
+
+.post-container {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 0;
+    gap: 20px;
+    box-sizing: border-box;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+aside {
+    top: 12px;
+    position: sticky;
+    flex-basis: 10%;
+    max-width: 30%;
+    padding: 1em;
+    /* border-left: 4px solid #004080; */
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin: 12px 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    /* height: calc(60vh - 24px - 60px); */
 }
