@@ -196,3 +196,25 @@ function get_user_posts($userId)
     mysqli_stmt_close($statement);
     return $result;
 }
+
+function insert_post($title, $content, $userId)
+{
+    global $connection;
+    $sql = "INSERT INTO post (title, content, userId) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $title, $content, $userId);
+    mysqli_stmt_execute($stmt);
+    $postId = mysqli_insert_id($connection);
+    mysqli_stmt_close($stmt);
+    return $postId;
+}
+
+function insert_image($filename, $description, $postId)
+{
+    global $connection;
+    $sql = "INSERT INTO image (filename, description, postId) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $filename, $description, $postId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}

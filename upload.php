@@ -2,32 +2,25 @@
 include('./app/includes/header.php');
 require_once 'db.php';
 
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $desc = $_POST['desc'];
-    $userId = $_POST['userId']; // In real app, you'd use session
+    $userId = $_SESSION['user']['id'];
 
     // Save file
     $filename = basename($_FILES["image"]["name"]);
     move_uploaded_file($_FILES["image"]["tmp_name"], "uploads/$filename");
 
-    // Insert post
-    global $connection;
-    $sql = "INSERT INTO post (title, content, userId) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($connection, $sql);
-    mysqli_stmt_bind_param($stmt, "ssi", $title, $desc, $userId);
-    mysqli_stmt_execute($stmt);
-    $postId = mysqli_insert_id($connection);
-    mysqli_stmt_close($stmt);
+    // Insert post and image via db.php
+    $postId = insert_post($title, $desc, $userId);
+    insert_image($filename, $desc, $postId);
 
-    // Insert image
-    $sql = "INSERT INTO image (filename, description, postId) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($connection, $sql);
-    mysqli_stmt_bind_param($stmt, "ssi", $filename, $desc, $postId);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    echo "Post uploaded!";
+    echo "✅ Post uploaded!";
 }
 ?>
 

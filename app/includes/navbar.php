@@ -1,3 +1,4 @@
+<?php include('./app/config/config.php')?>
 <nav class="navbar">
     <button class="hamburger-menu">&#9776;</button>
 
@@ -14,7 +15,15 @@
         <li><a href="./posts.php">Blogs</a></li>
         <li><a href="./upload.php">Upload Blog</a></li>
         
-        <a class="btn-g" href="login.php">Logga in</a>
+        <?php if (isset($_SESSION['user'])): ?>
+            <li class="green-font">
+                👤 <?= htmlspecialchars($_SESSION['user']['username']) ?> (ID: <?= $_SESSION['user']['id'] ?>)
+            </li>
+            <li><a class="btn-y" href="logout.php">Logga ut</a></li>
+        <?php else: ?>
+            <li><a class="btn-g" href="login.php">Logga in</a></li>
+        <?php endif; ?>
+        
         <li></li>
     </ul>
 

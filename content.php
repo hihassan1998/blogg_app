@@ -1,5 +1,6 @@
 <?php
-session_start();
+include('./app/includes/header.php');
+
 require 'db.php';
 
 if (!isset($_SESSION['user'])) {
@@ -12,20 +13,33 @@ $userId = $currentUser['id'];
 echo $userId;
 $posts = get_user_posts($userId);
 ?>
+<main>
 
-<h2>Welcome, <?= htmlspecialchars($currentUser['username']) ?>! Here are your posts:</h2>
+    <h2>Welcome,
+        <?= htmlspecialchars($currentUser['username']) ?>
+        ! Here are your posts:</h2>
 
-<?php if (empty($posts)): ?>
-    <p>You haven't posted anything yet.</p>
-<?php else: ?>
-    <ul>
-        <?php foreach ($posts as $post): ?>
-            <li>
-                <strong><?= htmlspecialchars($post['title']) ?></strong><br>
-                <strong><?= htmlspecialchars($post['userId']) ?></strong><br>
-                <?= nl2br(htmlspecialchars($post['content'])) ?><br>
-                <small>Posted on <?= htmlspecialchars($post['created_at']) ?></small>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+        
+        <?php if (empty($posts)): ?>
+            
+            <div class="om-content">
+                <p class="om-content">You haven't posted anything yet.</p>
+            </div>
+            
+        <?php else: ?>
+            <ul>
+                <?php foreach ($posts as $post): ?>
+                          <li class="om-content">
+                              <strong><?= htmlspecialchars($post['title']) ?></strong><br>
+                              <strong><?= htmlspecialchars($post['userId']) ?></strong><br>
+                              <?= nl2br(htmlspecialchars($post['content'])) ?>
+                              <br>
+                              <small>Posted on
+                                  <?= htmlspecialchars($post['created_at']) ?>
+                                </small>
+                            </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
+</main>

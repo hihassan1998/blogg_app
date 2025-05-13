@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user = get_user($username);
 
         if (!empty($user)) {
-            $user = $user[0]; // get_user() returns an array with one user
+            $user = $user[0];
             $userId = $user['id'];
 
             $passwordData = get_password($userId);
@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $storedHashedPassword = $passwordData[0]['password'];
 
                 if (password_verify($password, $storedHashedPassword)) {
-                    // ✅ Successful login
+                    // Successful login
                     session_start();
                     $_SESSION['user'] = $user;
 
-                    header("Location: user.php");
+                    header("Location: content.php");
                     exit();
                 } else {
                     $feedbackMessage = "❌ Invalid username or password.";
