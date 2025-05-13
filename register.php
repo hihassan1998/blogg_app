@@ -1,5 +1,8 @@
 <?php
-require 'db.php';
+require './db.php';
+
+include('./app/includes/header.php');
+
 
 $feedbackMessage = '';
 
@@ -36,14 +39,9 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
-<?php include('./app/includes/header.php') ?>
 
 <main class="back-support">
     <div class="container">
-
-
-
-
         <?php if (!empty($feedbackMessage)): ?>
             <div class="om-content" style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;">
                 <?= htmlspecialchars($feedbackMessage) ?>

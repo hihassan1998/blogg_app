@@ -173,6 +173,24 @@ function get_posts()
             JOIN user ON post.userId = post.id 
             ORDER BY post.created DESC';
     $statement = mysqli_prepare($connection, $sql);
+
+    mysqli_stmt_execute($statement);
+    $result = get_result($statement);
+    mysqli_stmt_close($statement);
+    return $result;
+}
+
+function get_user_posts($userId)
+{
+    global $connection;
+    $sql = 'SELECT post.title, post.content, post.created, post.userId 
+            FROM post 
+            JOIN user ON post.userId = user.id 
+            WHERE post.userId = ? 
+            ORDER BY post.created DESC';
+    
+    $statement = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($statement, "i", $userId);
     mysqli_stmt_execute($statement);
     $result = get_result($statement);
     mysqli_stmt_close($statement);

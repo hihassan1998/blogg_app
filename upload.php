@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Title: <input name="title" required><br>
         </div>
         <div class="row-form blue-font">
-            Description: <textarea name="desc" required></textarea><br>
+            Content: <textarea name="content" required></textarea><br>
         </div>
         <div class="row-form blue-font">
             Image: <input class="btn-y" type="file" name="image"><br>
