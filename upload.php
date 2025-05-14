@@ -12,6 +12,7 @@ $userId = $currentUser['id'];
 $username = htmlspecialchars($currentUser['username']);
 $post = null;
 $formSubmitted = false;
+$message = ''; // Variable to hold the message
 
 
 // Check if we're editing
@@ -45,36 +46,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($filename) {
             insert_image($filename, $content, $postId);
         }
-        echo "✅ Post updated!";
+        $message = "Post successfully uploaded! ✅";
     } else {
         // Creating new post
         $postId = insert_post($title, $content, $userId);
         if ($filename) {
             insert_image($filename, $content, $postId);
         }
-        echo "✅ Post uploaded!";
+        $message = "Post successfully uploaded! ✅";
     }
 
     // Set flag after form submission
     $formSubmitted = true;
 
     // Reload for fresh data
-    // $post = get_single_post($postId);
+    $post = get_single_post($postId);
 }
 ?>
 
 <main>
 
     <div class="om-content">
-        <h1 class="blue-font"><?= $post ? "Edit Your Post" : "Upload Your Content" ?>
+        <h1 class="blue-font"><?= $post ? "Edit Your Post (ID: " . htmlspecialchars($post['id']) . ")" : "Upload Your Content" ?>
             <?php echo $postId; ?>
-
         </h1>
     </div>
 
-    <form class="om-content" method="POST" enctype="multipart/form-data">
+    <?php if ($message): ?>
+        <div class="om-content">
+            <p><?= $message ?></p>
+        </div>
+    <?php endif; ?>
 
-        <input type="hidden" name="postId" value="<?= $post ? $post['id'] : '' ?>">
+
+    <form
+        class="om-content" method="POST" enctype="multipart/form-data">
+
+        <?php if ($post): ?>
+            <input
+            type="hidden" name="postId" value="<?= $post['id'] ?>">
+        <?php endif; ?>
+
 
         <div class="row-form blue-font">
             User:
@@ -95,6 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button class="btn-g" type="submit"><?= $post ? "Update Post" : "Upload Post" ?></button>
     </form>
 
+
 </main>
 <?php
 include('./app/includes/footer.php'); ?>
@@ -103,7 +116,7 @@ include('./app/includes/footer.php'); ?>
 <script src="./redirect.js"></script>
 <script>
     <?php if ($formSubmitted): ?>
-                redirectToContentPage();
-        <?php endif; ?>
-    </script>
+                                        redirectToContentPage();
+                    <?php endif; ?>
+                </script>
 

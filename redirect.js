@@ -4,5 +4,5 @@
 function redirectToContentPage() {
     setTimeout(function() {
         window.location.href = 'content.php';
-    }, 2000); 
+    }, 3500); 
 }
