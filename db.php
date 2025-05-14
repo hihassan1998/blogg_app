@@ -183,7 +183,7 @@ function get_posts()
 function get_user_posts($userId)
 {
     global $connection;
-    $sql = 'SELECT post.title, post.content, post.created, post.userId 
+    $sql = 'SELECT  post.id, post.title, post.content, post.created, post.userId 
             FROM post 
             JOIN user ON post.userId = user.id 
             WHERE post.userId = ? 
@@ -246,4 +246,14 @@ function get_single_post($postId) {
     mysqli_stmt_close($stmt);
 
     return $result[0] ?? null;
+}
+
+function edit_post($postId, $title, $content, $userId)
+{
+    global $connection;
+    $sql = "UPDATE post SET title = ?, content = ? WHERE id = ? AND userId = ?";
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, "ssii", $title, $content, $postId, $userId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }

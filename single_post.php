@@ -39,7 +39,7 @@ $post = $results[0];
             <h2><?= htmlspecialchars($post['title']) ?></h2>
             <p>
                 <strong><?= htmlspecialchars($post['username']) ?></strong>
-                skrev:</p>
+                wrote:</p>
             <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
             <small><?= htmlspecialchars($post['created']) ?></small>
         </div>
