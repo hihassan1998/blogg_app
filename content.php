@@ -12,6 +12,21 @@ $currentUser = $_SESSION['user'];
 $userId = $currentUser['id'];
 // echo $userId;
 $posts = get_user_posts($userId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletePostId'])) {
+    $deletePostId = intval($_POST['deletePostId']);
+    // Optional: Confirm the post belongs to the user before deleting
+    $post = get_single_post($deletePostId);
+    if ($post && $post['userId'] === $userId) {
+        delete_post($deletePostId);
+        // Redirect to prevent resubmission on refresh
+        header("Location: content.php");
+        exit();
+    } else {
+        echo "<p>❌ You don't have permission to delete this post.</p>";
+    }
+}
+
 ?>
 <main>
 
@@ -38,8 +53,28 @@ $posts = get_user_posts($userId);
                     </small>
                     <br>
                     <br>
+                    <?php
+                    // Fetch the images associated with the post
+                    if (isset($post['id'])) {
+                        $images = get_images($post['id']);
+                        if ($images):
+                            // Loop through all images and display them
+                            foreach ($images as $image): ?>
+                                <img
+                                src="./uploads/<?= htmlspecialchars($image['filename']) ?>" alt="<?= htmlspecialchars($image['description']) ?>" style="max-width: 300px; margin-top: 10px;">
+                            <?php endforeach;
+                        endif;
+                    }
+                    ?>
+
+                    <br>
+                    <br>
                     <?php if (!empty($post['id'])): ?>
                         <a href="upload.php?postId=<?= urlencode($post['id']) ?>" class="btn-g">Edit</a>
+                        <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                            <input type="hidden" name="deletePostId" value="<?= $post['id'] ?>">
+                            <button type="submit" class="btn-r">Delete</button>
+                        </form>
                     <?php else: ?>
                         <span class="error">Post ID is missing!</span>
                     <?php endif; ?>

@@ -100,8 +100,33 @@ function change_avatar($filename, $id)
     return $result;
 }
 
+function delete_image_file($postId)
+{
+    global $connection;
+
+    $stmt = mysqli_prepare($connection, "SELECT filename FROM image WHERE postId = ?");
+    mysqli_stmt_bind_param($stmt, "i", $postId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    foreach (mysqli_fetch_all($result, MYSQLI_ASSOC) as $row) {
+        $path = 'uploads/' . $row['filename'];
+        if (is_file($path)) {
+            unlink($path);
+        }
+    }
+    $stmtDelete = mysqli_prepare($connection, "DELETE FROM image WHERE postId = ?");
+    mysqli_stmt_bind_param($stmtDelete, "i", $postId);
+    mysqli_stmt_execute($stmtDelete);
+    mysqli_stmt_close($stmtDelete);
+
+    mysqli_stmt_close($stmt);
+}
+
 function delete_post($id)
 {
+    delete_image_file($id); // Radera bilder för ssamma postId
+
     global $connection;
     $sql = 'DELETE FROM post WHERE id=?';
     $statment = mysqli_prepare($connection, $sql);
@@ -111,59 +136,59 @@ function delete_post($id)
     return $result;
 }
 
-/**
- * OBS! Kan ta bort alla tabeller ut databasen om så önskas
- *
- * Importerar databastabeller och innehåll i databasen från en .sql-fil
- * Använd MyPhpAdmin för att exportera din lokala databas till en .sql-fil
- *
- * @param $db
- * @param $filename
- * @param $dropOldTables - skicka in TRUE om alla tabeller som finns ska tas bort
- */
-function import($filename, $dropOldTables = FALSE)
-{
-    global $connection;
-    // Om $dropOldTables är TRUE så ska vi ta bort alla gamla tabeller
-    if ($dropOldTables) {
-        // Börjar med att hämta eventuella tabeller som finns i databasen
-        $query = 'SHOW TABLES';
-        $result = mysqli_query($connection, $query);
-        // Om några tabeller hämtats
-        if ($result) {
-            // Hämta rad för rad ur resultatet
-            while ($row = mysqli_fetch_row($result)) {
-                $query = 'DROP TABLE ' . $row[0];
-                if (mysqli_query($connection, $query))
-                    echo 'Tabellen <strong>' . $row[0] . '</strong> togs bort<br>';
-            }
-        }
-    }
-    $query = '';
-    // Läs in filens innehåll
-    $lines = file($filename);
+// /**
+//  * OBS! Kan ta bort alla tabeller ut databasen om så önskas
+//  *
+//  * Importerar databastabeller och innehåll i databasen från en .sql-fil
+//  * Använd MyPhpAdmin för att exportera din lokala databas till en .sql-fil
+//  *
+//  * @param $db
+//  * @param $filename
+//  * @param $dropOldTables - skicka in TRUE om alla tabeller som finns ska tas bort
+//  */
+// function import($filename, $dropOldTables = FALSE)
+// {
+//     global $connection;
+//     // Om $dropOldTables är TRUE så ska vi ta bort alla gamla tabeller
+//     if ($dropOldTables) {
+//         // Börjar med att hämta eventuella tabeller som finns i databasen
+//         $query = 'SHOW TABLES';
+//         $result = mysqli_query($connection, $query);
+//         // Om några tabeller hämtats
+//         if ($result) {
+//             // Hämta rad för rad ur resultatet
+//             while ($row = mysqli_fetch_row($result)) {
+//                 $query = 'DROP TABLE ' . $row[0];
+//                 if (mysqli_query($connection, $query))
+//                     echo 'Tabellen <strong>' . $row[0] . '</strong> togs bort<br>';
+//             }
+//         }
+//     }
+//     $query = '';
+//     // Läs in filens innehåll
+//     $lines = file($filename);
 
-    // Hantera en rad i taget
-    foreach ($lines as $line) {
-        // Gör inget med kommentarer eller tomma rader (gå till nästa rad)
-        if (substr($line, 0, 2) == '--' || $line == '')
-            continue;
+//     // Hantera en rad i taget
+//     foreach ($lines as $line) {
+//         // Gör inget med kommentarer eller tomma rader (gå till nästa rad)
+//         if (substr($line, 0, 2) == '--' || $line == '')
+//             continue;
 
-        // Varje rad läggs till i frågan (query)
-        $query .= $line;
+//         // Varje rad läggs till i frågan (query)
+//         $query .= $line;
 
-        // Slutet på frågan är hittad om ett semikolon hittades i slutet av raden
-        if (substr(trim($line), -1, 1) == ';') {
-            // Kör frågan mot databasen
-            if (!mysqli_query($connection, $query))
-                echo "<br>Fel i frågan: <strong>$query</strong><br><br>";
+//         // Slutet på frågan är hittad om ett semikolon hittades i slutet av raden
+//         if (substr(trim($line), -1, 1) == ';') {
+//             // Kör frågan mot databasen
+//             if (!mysqli_query($connection, $query))
+//                 echo "<br>Fel i frågan: <strong>$query</strong><br><br>";
 
-            // Töm $query så vi kan starta med nästa fråga
-            $query = '';
-        }
-    }
-    echo 'Importeringen är klar!<br>';
-}
+//             // Töm $query så vi kan starta med nästa fråga
+//             $query = '';
+//         }
+//     }
+//     echo 'Importeringen är klar!<br>';
+// }
 
 function get_posts()
 {
@@ -188,7 +213,7 @@ function get_user_posts($userId)
             JOIN user ON post.userId = user.id 
             WHERE post.userId = ? 
             ORDER BY post.created DESC';
-    
+
     $statement = mysqli_prepare($connection, $sql);
     mysqli_stmt_bind_param($statement, "i", $userId);
     mysqli_stmt_execute($statement);
@@ -233,11 +258,13 @@ function get_all_posts()
     return $result;
 }
 
-function get_single_post($postId) {
+function get_single_post($postId)
+{
     global $connection;
     $sql = "SELECT post.*, user.username 
             FROM post 
-            JOIN user ON post.userId = user.id 
+            JOIN user ON post.userId = user.id
+            LEFT JOIN image ON image.postId = post.id
             WHERE post.id = ?";
     $stmt = mysqli_prepare($connection, $sql);
     mysqli_stmt_bind_param($stmt, "i", $postId);
@@ -257,3 +284,4 @@ function edit_post($postId, $title, $content, $userId)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+

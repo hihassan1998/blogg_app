@@ -44,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $postId = intval($_POST['postId']);
         edit_post($postId, $title, $content, $userId);
         if ($filename) {
+            delete_image_file($postId);
             insert_image($filename, $content, $postId);
         }
         $message = "Post successfully uploaded! ✅";
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="om-content">
         <h1 class="blue-font"><?= $post ? "Edit Your Post (ID: " . htmlspecialchars($post['id']) . ")" : "Upload Your Content" ?>
-            <?php echo $postId; ?>
+            <?#php echo $postId; ?>
         </h1>
     </div>
 
@@ -103,6 +104,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row-form blue-font">
             Image:
             <input class="btn-y" type="file" name="image"><br>
+            <?php if ($post && !empty($post['filename'])): ?>
+                <div class="row-form blue-font">
+                    <p>Current image:</p>
+                    <img src="uploads/<?= htmlspecialchars($post['filename']) ?>" alt="Post image" style="max-width: 300px;">
+                </div>
+            <?php endif; ?>
         </div>
         <button class="btn-g" type="submit"><?= $post ? "Update Post" : "Upload Post" ?></button>
     </form>
@@ -116,7 +123,7 @@ include('./app/includes/footer.php'); ?>
 <script src="./redirect.js"></script>
 <script>
     <?php if ($formSubmitted): ?>
-                                        redirectToContentPage();
-                    <?php endif; ?>
-                </script>
+                                                redirectToContentPage();
+                        <?php endif; ?>
+                    </script>
 

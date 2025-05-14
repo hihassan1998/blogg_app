@@ -314,7 +314,7 @@ form .input {
 .btn-g {
     color: #FFCD00;
     background-color: #01411C;
-    border: 2px solid #ffffff;
+    border: 2px solid #000000;
     border-radius: 5px;
     padding: 5px;
     font-weight: bold;
@@ -322,6 +322,23 @@ form .input {
     text-decoration: none;
     padding: 7px;
 }
+.btn-r {
+    color: #000000;
+    background-color: #ff0000;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 7px;
+}
+ .btn-r:hover {
+    color: #FFFFFF;
+    background-color: #e10000;
+
+    cursor: pointer;
+ }
 
 a {
     text-decoration: none;
@@ -411,4 +428,13 @@ aside {
     box-sizing: border-box;
     overflow-wrap: break-word;
     /* height: calc(60vh - 24px - 60px); */
+}
+
+aside a {
+    color: #FFCD00;
+}
+
+.ullist {
+    margin-left: 2px;
+    list-style-type: circle;
 }

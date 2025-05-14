@@ -8,18 +8,16 @@
 <?php elseif (isset($posts) && is_array($posts)): ?>
     <div class="post-list" style="padding: 15px; border: 1px solid #ccc;">
         <h3>All bloggtitlar</h3>
-        <ul>
+        <ul class="ullist">
             <?php foreach ($posts as $p): ?>
                 <li>
                     <a href="single_post.php?postId=<?= urlencode($p['id']) ?>">
                         <?= htmlspecialchars($p['title']) ?>
                     </a>
                 </li>
-                <li>
-                    
-                </li>
+                <br>
             <?php endforeach; ?>
-        </ul>
+        </ul class="ullist">
     </div>
 <?php else: ?>
     <p>❌ No data availbe to display.</p>

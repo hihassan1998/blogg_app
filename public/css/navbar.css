@@ -153,7 +153,7 @@ nav ul li a {
 
 a:hover {
     transform: scale(1.05);
-    color: rgb(0, 183, 255);
+    color: rgb(255, 255, 255);
 }
 
 /* Dropdown Menu - Hidden by Default */
@@ -194,7 +194,7 @@ a:hover {
 
 .dropdown-menu li a:hover {
     /* background-color: #f0f0f0; */
-    background-color: #005BAC;
+    background-color: #f1f1f1;
 }
 
 
