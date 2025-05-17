@@ -1,6 +1,7 @@
 <?php
 include('./app/includes/header.php');
 require_once 'db.php';
+require_once('render_image.php');
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
@@ -64,8 +65,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $post = get_single_post($postId);
 }
 ?>
+<!-- Include the redirect script -->
+<script src="./redirect.js"></script>
+<script>
+    <?php if ($formSubmitted): ?>
+            redirectToContentPage();
+    <?php endif; ?>
+</script>
+
 
 <main>
+    
 
     <div class="om-content">
         <h1 class="blue-font"><?= $post ? "Edit Your Post (ID: " . htmlspecialchars($post['id']) . ")" : "Upload Your Content" ?>
@@ -82,35 +92,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form
         class="om-content" method="POST" enctype="multipart/form-data">
-
         <?php if ($post): ?>
             <input
             type="hidden" name="postId" value="<?= $post['id'] ?>">
         <?php endif; ?>
-
-
         <div class="row-form blue-font">
             User:
             <strong><?= $username ?></strong><br>
         </div>
+
+
         <div class="row-form blue-font">
             Title:
             <input name="title" value="<?= $post ? htmlspecialchars($post['title']) : '' ?>" required><br>
         </div>
+
+
         <div class="row-form blue-font">
             Content:
             <textarea name="content" required><?= $post ? htmlspecialchars($post['content']) : '' ?></textarea><br>
         </div>
+
+
         <div class="row-form blue-font">
             Image:
             <input class="btn-y" type="file" name="image"><br>
-            <?php if ($post && !empty($post['filename'])): ?>
+        </div>
+
+        <div
+            class="row-form blue-font">
+            <?php if ($post): ?>
                 <div class="row-form blue-font">
                     <p>Current image:</p>
-                    <img src="uploads/<?= htmlspecialchars($post['filename']) ?>" alt="Post image" style="max-width: 300px;">
-                </div>
-            <?php endif; ?>
+
+                    <?php
+                    render_images_for_post($post['id']);
+                    ?>
+                <?php endif; ?>
+            </div>
         </div>
+
+
         <button class="btn-g" type="submit"><?= $post ? "Update Post" : "Upload Post" ?></button>
     </form>
 
@@ -119,11 +141,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 include('./app/includes/footer.php'); ?>
 
-<!-- Include the redirect script -->
-<script src="./redirect.js"></script>
-<script>
-    <?php if ($formSubmitted): ?>
-                                                redirectToContentPage();
-                        <?php endif; ?>
-                    </script>
 

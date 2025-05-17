@@ -15,6 +15,8 @@ if (!$viewingUser && !empty($posts)) {
     $viewingUser = ['username' => $posts[0]['username'] ?? 'Unknown'];
 }
 
+
+
 ?>
 
 <main>

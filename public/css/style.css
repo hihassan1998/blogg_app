@@ -437,3 +437,9 @@ article{
     text-align: center;
     margin: 0 auto;
 }
+ol a {
+    color: #000000;
+}
+ol a:hover {
+    color:red;
+}

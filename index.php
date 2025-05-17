@@ -14,14 +14,27 @@ $posts = get_posts();
 <?php include('./app/includes/header.php') ?>
 <main class=" back-support">
 
-    <h1 class="yellow-title special-heading">Välkommen till Blogg Appen!</h1>
-    <hr>
-    
-    <div class="yellow-font back-support">
-        <h1 class="green-font special-heading">Get creative, inovative or simply write your heart out !</h1>
-        <p>Detta är en enkel bloggapplikation där du kan logga in och se användarnas inlägg.</p>
+
+
+<div class="contactlayout">
+      
+        <div class="part">
+            <h1 class="yellow-font">
+                <b>Welcome to Blogster !
+                </b>
+            </h1>
+        </div>
+          <div class="part centered">
+            <div>
+                <img style="max-width: 250px;" src="./public/img/logo/blog_icon.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="yellow-font back-support centered">
+        <h3 class="">Get creative, inovative or simply write your heart out !</h3>
+        <p>This is a simple bloging application where you can register as a blogger, read, create, update or delte blogs.</p>
         <br>
-        <a class="btn-y2" href="login.php">Logga in</a>
+        <a class="btn-y2" href="login.php">Log in</a>
          <br>
     <br>
     <hr>

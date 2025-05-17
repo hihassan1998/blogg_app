@@ -22,9 +22,9 @@
             👤 <?= htmlspecialchars($_SESSION['user']['username']) ?> (ID: <?= $_SESSION['user']['id'] ?>)
         </a>
     </li>
-            <li><a class="btn-y" href="logout.php">Logga ut</a></li>
+            <li><a class="btn-y" href="logout.php">Log out</a></li>
         <?php else: ?>
-            <li><a class="btn-g" href="login.php">Logga in</a></li>
+            <li><a class="btn-g" href="login.php">Log in</a></li>
              <a class="btn-y" href="./register.php">Register as a blogger</a>
         <?php endif; ?>
         

@@ -141,8 +141,8 @@ COMMIT;
 -- Insert a sample user into the user table
 INSERT INTO user (username, password, title, presentation, image, created)
 VALUES
-    ('hassan', '123', 'Mr.', 'A passionate blogger.', 'default.jpg', NOW()),
-     ('ali', '123', 'Mr.', 'A dedicated blogger.', 'default.jpg', NOW());
+    ('hassan', '$2y$10$4iRvzIW2gqglfDNXndb/ZuG2MYwX5BiI5G07un8YFQsAGIaSanmVa', 'Mr.', 'A passionate blogger.', 'default.jpg', NOW()),
+     ('ali', '$2y$10$AdfmczjnhE06PYuGXCTm6uP4CmvD8TatvMbVXZQ8pYvcJANHvZVO2', 'Mr.', 'A dedicated blogger.', 'default.jpg', NOW());
 
 --
 -- Insert data into database table post

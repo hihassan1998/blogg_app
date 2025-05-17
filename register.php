@@ -11,19 +11,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'] ?? '';
 
     if (!empty($username) && !empty($password)) {
-        $existingUser = get_user($username);
-
-        if (!empty($existingUser)) {
-            // Username already exists
-            $feedbackMessage = "❌ User already registered.";
+        if (strlen($password) < 6) {
+            $feedbackMessage = "❗ Password must be at least 6 characters long.";
         } else {
-            // Register new user
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            add_user($username, $hashed_password);
+            $existingUser = get_user($username);
 
-            // Redirect to avoid resubmission
-            header("Location: register.php?success=1");
-            exit();
+            if (!empty($existingUser)) {
+                $feedbackMessage = "❌ User already registered.";
+            } else {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                add_user($username, $hashed_password);
+                header("Location: register.php?success=1");
+                exit();
+            }
         }
     } else {
         $feedbackMessage = "❗ Both fields are required.";
@@ -41,19 +41,22 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 </head>
 
 <main class="back-support">
-    <div class="container">
+    <div
+        class="container">
         <?php if (!empty($feedbackMessage)): ?>
-            <div class="om-content" style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;">
-                <?= htmlspecialchars($feedbackMessage) ?>
+            <div
+                class="om-content" style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"><?= htmlspecialchars($feedbackMessage) ?>
             </div>
         <?php endif; ?>
 
         <form method="post">
             <div class="row-form yellow-font">
-                Username: <input name="username" required><br>
+                Username:
+                <input name="username" required><br>
             </div>
             <div class="row-form yellow-font">
-                Password: <input type="password" name="password" required><br>
+                Password:
+                <input type="password" name="password" required><br>
             </div>
             <button class="btn-y" type="submit">Register</button>
         </form>
@@ -61,3 +64,4 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 </main>
 
 <?php include('./app/includes/footer.php') ?>
+
