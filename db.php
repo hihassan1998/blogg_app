@@ -285,3 +285,13 @@ function edit_post($postId, $title, $content, $userId)
     mysqli_stmt_close($stmt);
 }
 
+function nyheter()
+{
+    $users = get_users();
+    $posts = get_all_posts();
+
+    return [
+        'users' => $users,
+        'posts' => $posts
+    ];
+}
