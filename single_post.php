@@ -1,6 +1,8 @@
 <?php
 require_once('db.php');
 include('./app/includes/header.php');
+include './render_image.php';
+
 
 if (!isset($_GET['postId'])) {
     echo "<p>❌ Inget inlägg valt.</p>";
@@ -34,9 +36,13 @@ $post = $results[0];
     <aside
         class="back-support"><?php include('./info.php'); ?>
     </aside>
-    <main class="">
+    <main class="centered">
         <div class="om-content" style="padding: 20px;">
             <h2><?= htmlspecialchars($post['title']) ?></h2>
+            <?php render_images_for_post($post['id']); ?>
+
+            <br>
+
             <p>
                 <strong><?= htmlspecialchars($post['username']) ?></strong>
                 wrote:</p>

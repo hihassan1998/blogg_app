@@ -1,79 +1,50 @@
 <?php
 include('./app/includes/header.php');
-require 'db.php';
 
+include('./load_posts.php');
+
+include('./render_image.php');
+
+// Session + view logic
 $loggedInUser = $_SESSION['user'] ?? null;
-$viewingUser = null;
+$isOwner = isset($loggedInUser);
+$viewingUser = $isOwner ? $loggedInUser : null;
 
-// Determine if viewing another user's posts
-if (isset($_GET['userId'])) {
-    $viewingUserId = intval($_GET['userId']);
-    $viewingUser = get_user_by_id($viewingUserId);
-    if (!$viewingUser) {
-        echo "<p>User not found.</p>";
-        exit();
-    }
-} elseif ($loggedInUser) {
-    $viewingUser = $loggedInUser;
-    $viewingUserId = $loggedInUser['id'];
-} else {
-    header("Location: login.php");
-    exit();
+// Fallback to post author's username if not logged in
+if (!$viewingUser && !empty($posts)) {
+    $viewingUser = ['username' => $posts[0]['username'] ?? 'Unknown'];
 }
 
-$isOwner = $loggedInUser && ($loggedInUser['id'] === $viewingUserId);
-$posts = get_user_posts($viewingUserId);
-
-// Handle deletion if owner
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletePostId']) && $isOwner) {
-    $deletePostId = intval($_POST['deletePostId']);
-    $post = get_single_post($deletePostId);
-    if ($post && $post['userId'] === $viewingUserId) {
-        delete_post($deletePostId);
-        header("Location: content.php");
-        exit();
-    } else {
-        echo "<p>❌ You don't have permission to delete this post.</p>";
-    }
-}
 ?>
 
 <main>
-    <h2>
-    <?= $isOwner ? "Welcome, " . htmlspecialchars($loggedInUser['username']) . "! Here are your posts:" : "Posts by " . htmlspecialchars($viewingUser['username']) ?>
-</h2>
+     <h2>
+        <?php if ($isOwner): ?>
+            Welcome, <?= htmlspecialchars($viewingUser['username']) ?>! Here are your posts:
+        <?php else: ?>
+            Posts by <?= htmlspecialchars($viewingUser['username']) ?>
+        <?php endif; ?>
+    </h2>
 
 
     <?php if (empty($posts)): ?>
         <div class="om-content">
-            <p class="om-content"><?= $isOwner ? "You haven't posted anything yet." : "This user hasn't posted anything yet." ?></p>
+            <p class=""><?= $isOwner ? "You haven't posted anything yet." : "This user hasn't posted anything yet." ?></p>
         </div>
     <?php else: ?>
         <ul>
             <?php foreach ($posts as $post): ?>
-                <li class="om-content">
-                    <strong><?= htmlspecialchars($post['title']) ?></strong><br>
+                <li class="om-content ">
+                    <strong><?= htmlspecialchars($post['title']) ?></strong>
+                    <br>
+                    <?php render_images_for_post($post['id']); ?>
+
+                    <br>
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                     <br>
                     <small>Posted on
                         <?= htmlspecialchars($post['created']) ?>
                     </small><br><br>
-                    <?php
-                    $images = get_images($post['id']);
-                    // $images = get_images($post['userId']);
-                    if ($images):
-                        foreach ($images as $image):
-                            echo "<pre>DEBUG filename: ";
-                            var_dump($image['filename']);
-                            echo "</pre>";
-                            ?>
-                            <img class="centered" src="./uploads/<?= htmlspecialchars($image['filename']) ?>" alt="<?= htmlspecialchars($image['description']) ?>" style="max-width: 250px; margin-top: 10px;">
-                        <?php
-                        endforeach;
-                    else:
-                        echo "<p><em>DEBUG: No images found for post ID " . htmlspecialchars($post['id']) . ".</em></p>";
-                    endif;
-                    ?>
 
 
                     <br><br>
