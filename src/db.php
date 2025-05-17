@@ -41,6 +41,9 @@ function get_result($statment)
     return $rows;
 }
 
+/** 
+ * Gets all users from the user table.
+ */
 function get_users()
 {
     global $connection;
@@ -51,7 +54,9 @@ function get_users()
     mysqli_stmt_close($statment);
     return $result;
 }
-
+/** 
+ * Gets a specific users from the user table with username as parameter.
+ */
 function get_user($username)
 {
     global $connection;
@@ -64,6 +69,9 @@ function get_user($username)
     return $result;
 }
 
+/** 
+ * Gets a specific user from the user table with user id as parameter.
+ */
 function get_user_by_id($id)
 {
     global $connection;
@@ -76,7 +84,9 @@ function get_user_by_id($id)
     return $result;
 }
 
-
+/** 
+ * Gets the password for a user from the user table with user id as parameter.
+ */
 function get_password($id)
 {
     global $connection;
@@ -88,7 +98,9 @@ function get_password($id)
     mysqli_stmt_close($statment);
     return $result;
 }
-
+/** 
+ * Gets image associated with a post using post id.
+ */
 function get_images($id)
 {
     global $connection;
@@ -137,6 +149,9 @@ function delete_image_file($postId)
     mysqli_stmt_close($stmt);
 }
 
+/** 
+ * Delte a post by post id.
+ */
 function delete_post($id)
 {
     delete_image_file($id); // Radera bilder för ssamma postId
@@ -150,60 +165,9 @@ function delete_post($id)
     return $result;
 }
 
-// /**
-//  * OBS! Kan ta bort alla tabeller ut databasen om så önskas
-//  *
-//  * Importerar databastabeller och innehåll i databasen från en .sql-fil
-//  * Använd MyPhpAdmin för att exportera din lokala databas till en .sql-fil
-//  *
-//  * @param $db
-//  * @param $filename
-//  * @param $dropOldTables - skicka in TRUE om alla tabeller som finns ska tas bort
-//  */
-// function import($filename, $dropOldTables = FALSE)
-// {
-//     global $connection;
-//     // Om $dropOldTables är TRUE så ska vi ta bort alla gamla tabeller
-//     if ($dropOldTables) {
-//         // Börjar med att hämta eventuella tabeller som finns i databasen
-//         $query = 'SHOW TABLES';
-//         $result = mysqli_query($connection, $query);
-//         // Om några tabeller hämtats
-//         if ($result) {
-//             // Hämta rad för rad ur resultatet
-//             while ($row = mysqli_fetch_row($result)) {
-//                 $query = 'DROP TABLE ' . $row[0];
-//                 if (mysqli_query($connection, $query))
-//                     echo 'Tabellen <strong>' . $row[0] . '</strong> togs bort<br>';
-//             }
-//         }
-//     }
-//     $query = '';
-//     // Läs in filens innehåll
-//     $lines = file($filename);
-
-//     // Hantera en rad i taget
-//     foreach ($lines as $line) {
-//         // Gör inget med kommentarer eller tomma rader (gå till nästa rad)
-//         if (substr($line, 0, 2) == '--' || $line == '')
-//             continue;
-
-//         // Varje rad läggs till i frågan (query)
-//         $query .= $line;
-
-//         // Slutet på frågan är hittad om ett semikolon hittades i slutet av raden
-//         if (substr(trim($line), -1, 1) == ';') {
-//             // Kör frågan mot databasen
-//             if (!mysqli_query($connection, $query))
-//                 echo "<br>Fel i frågan: <strong>$query</strong><br><br>";
-
-//             // Töm $query så vi kan starta med nästa fråga
-//             $query = '';
-//         }
-//     }
-//     echo 'Importeringen är klar!<br>';
-// }
-
+/** 
+ * Get all posts from post table.
+ */
 function get_posts()
 {
     global $connection;
@@ -219,6 +183,9 @@ function get_posts()
     return $result;
 }
 
+/** 
+ * Get a posts from post table using user id.
+ */
 function get_user_posts($userId)
 {
     global $connection;
@@ -236,6 +203,9 @@ function get_user_posts($userId)
     return $result;
 }
 
+/** 
+ * Get most recent 3 posts from post table.
+ */
 function get_latest_posts($count = 3)
 {
     global $connection;
@@ -253,7 +223,9 @@ function get_latest_posts($count = 3)
     return $result;
 }
 
-
+/** 
+ * Add a posts from post table using $title, $content, $userId.
+ */
 function insert_post($title, $content, $userId)
 {
     global $connection;
@@ -266,6 +238,9 @@ function insert_post($title, $content, $userId)
     return $postId;
 }
 
+/** 
+ * Add an image to image table using filename, $description, $postId.
+ */
 function insert_image($filename, $description, $postId)
 {
     global $connection;
@@ -275,7 +250,9 @@ function insert_image($filename, $description, $postId)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
-
+/** 
+ * Get all posts from post table.
+ */
 function get_all_posts()
 {
     global $connection;
@@ -289,7 +266,10 @@ function get_all_posts()
     mysqli_stmt_close($statement);
     return $result;
 }
-
+/**
+ * GEt a singel post.
+ * @param mixed $postId
+ */
 function get_single_post($postId)
 {
     global $connection;
@@ -306,7 +286,13 @@ function get_single_post($postId)
 
     return $result[0] ?? null;
 }
-
+/**
+ * Edit a post.
+ * @param mixed $postId
+ * @param mixed $title
+ * @param mixed $content
+ * @param mixed $userId
+ */
 function edit_post($postId, $title, $content, $userId)
 {
     global $connection;
@@ -316,7 +302,10 @@ function edit_post($postId, $title, $content, $userId)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
-
+/**
+ * GEt the latest changes in databse from user and posts tables.
+ * @return array{posts: array, users: array}
+ */
 function nyheter()
 {
     $users = get_users();
