@@ -1,5 +1,5 @@
 <?php
-include('./app/includes/header.php');
+// include('./app/includes/header.php');
 // include('./app/includes/content.php') ;
 
 require_once('db.php');
@@ -7,20 +7,27 @@ $data = nyheter();
 $users = $data['users'];
 $posts = $data['posts'];
 ?>
-
-<h2>Senaste inlägg</h2>
+<h1 class="yellow-font"> <b>  Keep updated! </b></h1>
+<h3 class="">Newly added</h3>
 <?php foreach ($posts as $post): ?>
     <article>
-    <h3><?= htmlspecialchars($post['title']) ?></h3>
-    <small>Skapad: <?= htmlspecialchars($post['created']) ?></small>
-    <br>
-    <a href="single_post.php?postId=<?= urlencode($post['id']) ?>" class="btn-y">Read more</a>
+        <ul class="ullist">
+            <a href="content.php?userId=<?= urlencode($user['id']) ?>">
+                    <?= htmlspecialchars($post['title']) ?>
+                </a>
+        </ul>
 </article>
 <?php endforeach; ?>
 
-<h2>Användare</h2>
-<ul>
-    <?php foreach ($users as $user): ?>
-        <li><?= htmlspecialchars($user['username']) ?></li>
-    <?php endforeach; ?>
-</ul>
+<h3>New Users</h3>
+<article>
+    <ul>
+        <?php foreach ($users as $user): ?>
+            <li class="ullist">
+                <a href="content.php?userId=<?= urlencode($user['id']) ?>">
+                    <?= htmlspecialchars($user['username']) ?>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </article>

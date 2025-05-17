@@ -1,46 +1,53 @@
 <?php
 include('./app/includes/header.php');
-
 require 'db.php';
 
-if (!isset($_SESSION['user'])) {
+$loggedInUser = $_SESSION['user'] ?? null;
+$viewingUser = null;
+
+// Determine if viewing another user's posts
+if (isset($_GET['userId'])) {
+    $viewingUserId = intval($_GET['userId']);
+    $viewingUser = get_user_by_id($viewingUserId);
+    if (!$viewingUser) {
+        echo "<p>User not found.</p>";
+        exit();
+    }
+} elseif ($loggedInUser) {
+    $viewingUser = $loggedInUser;
+    $viewingUserId = $loggedInUser['id'];
+} else {
     header("Location: login.php");
     exit();
 }
 
-$currentUser = $_SESSION['user'];
-$userId = $currentUser['id'];
-// echo $userId;
-$posts = get_user_posts($userId);
+$isOwner = $loggedInUser && ($loggedInUser['id'] === $viewingUserId);
+$posts = get_user_posts($viewingUserId);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletePostId'])) {
+// Handle deletion if owner
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletePostId']) && $isOwner) {
     $deletePostId = intval($_POST['deletePostId']);
-    // Optional: Confirm the post belongs to the user before deleting
     $post = get_single_post($deletePostId);
-    if ($post && $post['userId'] === $userId) {
+    if ($post && $post['userId'] === $viewingUserId) {
         delete_post($deletePostId);
-        // Redirect to prevent resubmission on refresh
         header("Location: content.php");
         exit();
     } else {
         echo "<p>❌ You don't have permission to delete this post.</p>";
     }
 }
-
 ?>
-<main>
 
-    <h2>Welcome,
-        <?= htmlspecialchars($currentUser['username']) ?>
-        ! Here are your posts:</h2>
+<main>
+    <h2>
+    <?= $isOwner ? "Welcome, " . htmlspecialchars($loggedInUser['username']) . "! Here are your posts:" : "Posts by " . htmlspecialchars($viewingUser['username']) ?>
+</h2>
 
 
     <?php if (empty($posts)): ?>
-
         <div class="om-content">
-            <p class="om-content">You haven't posted anything yet.</p>
+            <p class="om-content"><?= $isOwner ? "You haven't posted anything yet." : "This user hasn't posted anything yet." ?></p>
         </div>
-
     <?php else: ?>
         <ul>
             <?php foreach ($posts as $post): ?>
@@ -50,38 +57,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletePostId'])) {
                     <br>
                     <small>Posted on
                         <?= htmlspecialchars($post['created']) ?>
-                    </small>
-                    <br>
-                    <br>
+                    </small><br><br>
                     <?php
-                    // Fetch the images associated with the post
-                    if (isset($post['id'])) {
-                        $images = get_images($post['id']);
-                        if ($images):
-                            // Loop through all images and display them
-                            foreach ($images as $image): ?>
-                                <img
-                                src="./uploads/<?= htmlspecialchars($image['filename']) ?>" alt="<?= htmlspecialchars($image['description']) ?>" style="max-width: 300px; margin-top: 10px;">
-                            <?php endforeach;
-                        endif;
-                    }
+                    $images = get_images($post['id']);
+                    // $images = get_images($post['userId']);
+                    if ($images):
+                        foreach ($images as $image):
+                            echo "<pre>DEBUG filename: ";
+                            var_dump($image['filename']);
+                            echo "</pre>";
+                            ?>
+                            <img class="centered" src="./uploads/<?= htmlspecialchars($image['filename']) ?>" alt="<?= htmlspecialchars($image['description']) ?>" style="max-width: 250px; margin-top: 10px;">
+                        <?php
+                        endforeach;
+                    else:
+                        echo "<p><em>DEBUG: No images found for post ID " . htmlspecialchars($post['id']) . ".</em></p>";
+                    endif;
                     ?>
 
-                    <br>
-                    <br>
-                    <?php if (!empty($post['id'])): ?>
+
+                    <br><br>
+                    <a href="single_post.php?postId=<?= urlencode($post['id']) ?>" class="btn-y">Read more</a>
+
+                    <?php if ($isOwner): ?>
                         <a href="upload.php?postId=<?= urlencode($post['id']) ?>" class="btn-g">Edit</a>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
                             <input type="hidden" name="deletePostId" value="<?= $post['id'] ?>">
                             <button type="submit" class="btn-r">Delete</button>
                         </form>
-                    <?php else: ?>
-                        <span class="error">Post ID is missing!</span>
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
-
 </main>
 

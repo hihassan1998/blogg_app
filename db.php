@@ -64,6 +64,19 @@ function get_user($username)
     return $result;
 }
 
+function get_user_by_id($id)
+{
+    global $connection;
+    $sql = 'SELECT * FROM user WHERE id=?';
+    $statement = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($statement, "i", $id);
+    mysqli_stmt_execute($statement);
+    $result = get_result($statement);
+    mysqli_stmt_close($statement);
+    return $result;
+}
+
+
 function get_password($id)
 {
     global $connection;
@@ -79,7 +92,8 @@ function get_password($id)
 function get_images($id)
 {
     global $connection;
-    $sql = 'SELECT image.filename, image.description FROM image JOIN post ON image.postId=post.id WHERE post.userId=?';
+    // $sql = 'SELECT image.filename, image.description FROM image JOIN post ON image.postId=post.id WHERE post.userId=?';
+    $sql = 'SELECT image.filename, image.description FROM image WHERE image.postId=?';
     $statment = mysqli_prepare($connection, $sql);
     mysqli_stmt_bind_param($statment, "i", $id);
     mysqli_stmt_execute($statment);
@@ -208,7 +222,7 @@ function get_posts()
 function get_user_posts($userId)
 {
     global $connection;
-    $sql = 'SELECT  post.id, post.title, post.content, post.created, post.userId 
+    $sql = 'SELECT  post.id, post.title, post.content, post.created, post.userId
             FROM post 
             JOIN user ON post.userId = user.id 
             WHERE post.userId = ? 
@@ -221,6 +235,24 @@ function get_user_posts($userId)
     mysqli_stmt_close($statement);
     return $result;
 }
+
+function get_latest_posts($count = 3)
+{
+    global $connection;
+    $sql = 'SELECT post.*, user.username 
+            FROM post 
+            JOIN user ON post.userId = user.id 
+            ORDER BY post.created DESC 
+            LIMIT ?';
+
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $count);
+    mysqli_stmt_execute($stmt);
+    $result = get_result($stmt);
+    mysqli_stmt_close($stmt);
+    return $result;
+}
+
 
 function insert_post($title, $content, $userId)
 {
@@ -288,7 +320,7 @@ function edit_post($postId, $title, $content, $userId)
 function nyheter()
 {
     $users = get_users();
-    $posts = get_all_posts();
+    $posts = get_latest_posts();
 
     return [
         'users' => $users,

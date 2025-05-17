@@ -14,8 +14,9 @@ $posts = get_all_posts();
 <h1>All Posts</h1>
 <div class="post-container">
     <aside
-        class="back-support"><?php include('./info.php'); ?>
+        class="back-support"><?php include('./menu.php'); ?>
     </aside>
+  
     <main>
 
 
@@ -37,6 +38,9 @@ $posts = get_all_posts();
             <?php endforeach; ?>
         <?php endif; ?>
     </main>
+      <aside
+        class="back-support"><?php include('./nyheter.php'); ?>
+    </aside>
 </div>
 <?php include('./app/includes/footer.php') ?>
 

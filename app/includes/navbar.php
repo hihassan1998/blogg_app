@@ -15,6 +15,7 @@
         <li><a href="./posts.php">Blogs</a></li>
         <li><a href="./upload.php">Upload Blog</a></li>
         <li><a href="./content.php">Your Posts</a></li>
+        <li><a href="./nyheter.php">Nyheter</a></li>
         
         <?php if (isset($_SESSION['user'])): ?>
             <li class="green-font">

@@ -127,16 +127,6 @@ ul {
 
 @media (max-width: 786px) {
 
-    .contactlayout {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr) !important;
-    }
-
-    .menulayout {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr) !important;
-    }
-
     .image-container {
         display: flex;
         flex-direction: column;
@@ -300,7 +290,7 @@ ul {
 
 
 .back-support {
-    background-color: rgba(83, 82, 82, 0.63);
+    background-color: rgba(83, 82, 82, 0.349);
     backdrop-filter: blur(10px);
     border-radius: 5px;
     padding: 15px;
@@ -437,4 +427,13 @@ aside a {
 .ullist {
     margin-left: 2px;
     list-style-type: circle;
+}
+
+article{
+    padding: 0.3rem;
+}
+
+.centered {
+    text-align: center;
+    margin: 0 auto;
 }
