@@ -142,7 +142,8 @@ COMMIT;
 INSERT INTO user (username, password, title, presentation, image, created)
 VALUES
     ('hassan', '$2y$10$4iRvzIW2gqglfDNXndb/ZuG2MYwX5BiI5G07un8YFQsAGIaSanmVa', 'Mr.', 'A passionate blogger.', 'default.jpg', NOW()),
-     ('ali', '$2y$10$AdfmczjnhE06PYuGXCTm6uP4CmvD8TatvMbVXZQ8pYvcJANHvZVO2', 'Mr.', 'A dedicated blogger.', 'default.jpg', NOW());
+     ('ali', '$2y$10$AdfmczjnhE06PYuGXCTm6uP4CmvD8TatvMbVXZQ8pYvcJANHvZVO2', 'Mr.', 'A dedicated blogger.', 'default.jpg', NOW()),
+       ('test', '$2y$10$qrIG1UcLTQIcj9YA3pvUW.5EutbCMIRD3bUYm0vMpilncXqUPG2my', 'Mr.', 'A new blogger.', 'default.jpg', NOW());
 
 --
 -- Insert data into database table post
@@ -151,9 +152,25 @@ VALUES
 -- Insert sample posts into the posts table
 INSERT INTO post (title, content, created, userId)
 VALUES
-    ('First Blog Post', 'This is the content of the first blog post.', NOW(), 1),
-    ('Second Blog Post', 'Here is the content for the second blog post.', NOW(), 1),
-    ('Third Blog Post', 'This is the content of the third blog post.', NOW(), 1);
+    ('My Journey with Coding', 'I started learning coding a few years ago, and it has been an exciting journey filled with challenges and growth.', NOW(), 1),
+    ('Why Blogging Matters', 'Blogging allows me to share my thoughts and experiences with the world.', NOW(), 1),
+    ('First Blog Post', 'This is the content of the first blog post.', NOW(), 2),
+    ('Second Blog Post', 'Here is the content for the second blog post.', NOW(), 2),
+    ('Third Blog Post', 'This is the content of the third blog post.', NOW(), 2),
+    ('First Blog Post', 'This is the content of the first blog post.', NOW(), 3);
+
+--
+-- Insert data into database table post
+--
+
+-- Insert sample posts into the image table
+INSERT INTO image (filename, description, created, postId)
+VALUES
+    ('mvc.png', 'Sample descr test.', NOW(), 1),
+    ('banner.jpg', 'Sample descr test..', NOW(), 2),
+    ('mvc.png', 'Sample descr test.', NOW(), 3),
+    ('hh_logo_b.png', 'Sample descr test..', NOW(), 4),
+    ('hh_logo_b.png', 'Sample descr test.', NOW(), 5);
     
     
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
