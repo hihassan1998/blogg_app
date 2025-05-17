@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     session_start();
                     $_SESSION['user'] = $user;
 
-                    header("Location: content.php");
+                    header("Location: admin.php");
                     exit();
                 } else {
                     $feedbackMessage = "❌ Invalid username or password.";

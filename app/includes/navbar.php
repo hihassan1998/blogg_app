@@ -11,16 +11,17 @@
             </a>
         </li>
         <li><a href="./index.php">Home</a></li>
-        <li></li>
         <li><a href="./posts.php">Blogs</a></li>
         <li><a href="./upload.php">Upload Blog</a></li>
-        <li><a href="./content.php">Your Posts</a></li>
-        <li><a href="./nyheter.php">Nyheter</a></li>
         
         <?php if (isset($_SESSION['user'])): ?>
+        <li><a href="./content.php">My Posts</a></li>
+
             <li class="green-font">
-                👤 <?= htmlspecialchars($_SESSION['user']['username']) ?> (ID: <?= $_SESSION['user']['id'] ?>)
-            </li>
+        <a href="./admin.php" style="color:inherit; text-decoration:none;">
+            👤 <?= htmlspecialchars($_SESSION['user']['username']) ?> (ID: <?= $_SESSION['user']['id'] ?>)
+        </a>
+    </li>
             <li><a class="btn-y" href="logout.php">Logga ut</a></li>
         <?php else: ?>
             <li><a class="btn-g" href="login.php">Logga in</a></li>

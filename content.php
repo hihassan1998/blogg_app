@@ -18,14 +18,6 @@ if (!$viewingUser && !empty($posts)) {
 ?>
 
 <main>
-     <h2>
-        <?php if ($isOwner): ?>
-            Welcome, <?= htmlspecialchars($viewingUser['username']) ?>! Here are your posts:
-        <?php else: ?>
-            Posts by <?= htmlspecialchars($viewingUser['username']) ?>
-        <?php endif; ?>
-    </h2>
-
 
     <?php if (empty($posts)): ?>
         <div class="om-content">
