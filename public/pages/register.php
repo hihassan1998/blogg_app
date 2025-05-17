@@ -1,11 +1,12 @@
 <?php
-require './db.php';
+require '../../src/db.php';
 
-include('./app/includes/header.php');
+include('../../app/includes/header.php');
 
 
 $feedbackMessage = '';
 
+// handel form post request and save encrypted apssword indb
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -63,5 +64,5 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     </div>
 </main>
 
-<?php include('./app/includes/footer.php') ?>
+<?php include('../../app/includes/footer.php') ?>
 

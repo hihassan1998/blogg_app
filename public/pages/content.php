@@ -1,5 +1,5 @@
 <?php
-include('./app/includes/header.php');
+include('../../app/includes/header.php');
 
 include('./load_posts.php');
 

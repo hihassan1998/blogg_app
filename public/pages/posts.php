@@ -1,8 +1,8 @@
 <?php
-include('./app/includes/header.php');
+include('../../app/includes/header.php');
 // include('./app/includes/content.php') ;
 
-require_once('db.php');
+require_once('../../src/db.php');
 
 $posts = get_all_posts();
 ?>
@@ -14,7 +14,7 @@ $posts = get_all_posts();
 <h1>All Posts</h1>
 <div class="post-container">
     <aside
-        class="back-support"><?php include('./menu.php'); ?>
+        class="back-support"><?php include('../../app/includes/menu.php'); ?>
     </aside>
   
     <main>
@@ -39,8 +39,8 @@ $posts = get_all_posts();
         <?php endif; ?>
     </main>
       <aside
-        class="back-support"><?php include('./nyheter.php'); ?>
+        class="back-support"><?php include('../../app/includes/nyheter.php'); ?>
     </aside>
 </div>
-<?php include('./app/includes/footer.php') ?>
+<?php include('../../app/includes/footer.php') ?>
 

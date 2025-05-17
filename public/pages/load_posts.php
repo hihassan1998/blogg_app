@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require '../../src/db.php';
 
 $loggedInUser = $_SESSION['user'] ?? null;
 $viewingUser = null;

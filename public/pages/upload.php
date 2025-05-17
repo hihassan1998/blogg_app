@@ -1,6 +1,6 @@
 <?php
-include('./app/includes/header.php');
-require_once 'db.php';
+include('../../app/includes/header.php');
+require_once '../../src/db.php';
 require_once('render_image.php');
 
 if (!isset($_SESSION['user'])) {
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!-- Include the redirect script -->
-<script src="./redirect.js"></script>
+<script src="../js/redirect.js"></script>
 <script>
     <?php if ($formSubmitted): ?>
             redirectToContentPage();
@@ -139,6 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </main>
 <?php
-include('./app/includes/footer.php'); ?>
+include('../../app/includes/footer.php'); ?>
 
 

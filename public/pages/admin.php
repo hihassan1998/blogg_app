@@ -1,5 +1,5 @@
 <?php
-include('./app/includes/header.php');
+include('../../app/includes/header.php');
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
     // Redirect to login if not logged in
@@ -21,7 +21,7 @@ $user = $_SESSION['user'];
     <div class="contactlayout">
         <div class="part">
             <div>
-                <img style="max-width: 250px;" src="./public/img/logo/blog_icon.png" alt="">
+                <img style="max-width: 250px;" src="../../public/img/logo/blog_icon.png" alt="">
             </div>
         </div>
         <div class="part">
@@ -55,6 +55,9 @@ $user = $_SESSION['user'];
                     <a href="content.php">VIew and manage my blogs</a>
                 </li>
                 <li>
+                    <a href="upload.php">Create blogs</a>
+                </li>
+                <li>
                     <a href="logout.php">Logout</a>
                 </li>
             </strong>
@@ -62,9 +65,6 @@ $user = $_SESSION['user'];
     </div>
 </main>
 
-<?php
-echo password_hash('123', PASSWORD_DEFAULT) . PHP_EOL;
-?>
 
-<?php include('./app/includes/footer.php') ?>
+<?php include('../../app/includes/footer.php') ?>
 

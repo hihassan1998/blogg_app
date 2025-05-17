@@ -2,7 +2,7 @@
 // include('./app/includes/header.php');
 // include('./app/includes/content.php') ;
 
-require_once('db.php');
+require_once('../../src/db.php');
 $data = nyheter();
 $users = $data['users'];
 $posts = $data['posts'];

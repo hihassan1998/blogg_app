@@ -1,19 +1,21 @@
 <?php
-require 'db.php';
+require '../../src/db.php';
+include('../../app/includes/header.php');
 
 $feedbackMessage = '';
 
+// HAndle forms post request and check for user inputs
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-
+    // Display error message if user input missing
     if (empty($username)) {
         $feedbackMessage = "❗ User name not given.";
     } elseif (empty($password)) {
         $feedbackMessage = "❗ Password not given.";
     } else {
         $user = get_user($username);
-
+        // Display feedbak to user based thier input text
         if (!empty($user)) {
             $user = $user[0];
             $userId = $user['id'];
@@ -47,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
-<?php include('./app/includes/header.php') ?>
 
 <main
     class="">
@@ -74,7 +75,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </main>
 
-<?php echo password_hash('test123', PASSWORD_DEFAULT); ?>
-
-<?php include('./app/includes/footer.php') ?>
+<?php include('../../app/includes/footer.php') ?>
 

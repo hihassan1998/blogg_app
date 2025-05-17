@@ -1,6 +1,6 @@
 <?php
-require_once('db.php');
-include('./app/includes/header.php');
+require_once('../../src/db.php');
+include('../../app/includes/header.php');
 include './render_image.php';
 
 
@@ -9,6 +9,7 @@ if (!isset($_GET['postId'])) {
     exit();
 }
 
+// GEt post if from url query
 $postId = intval($_GET['postId']);
 
 // Prepare and execute SQL
@@ -34,7 +35,7 @@ $post = $results[0];
 <div class="post-container">
 
     <aside
-        class="back-support"><?php include('./info.php'); ?>
+        class="back-support"><?php include('../../app/includes/info.php'); ?>
     </aside>
     <main class="centered">
         <div class="om-content" style="padding: 20px;">
@@ -52,5 +53,5 @@ $post = $results[0];
     </main>
 </div>
 
-<?php include('./app/includes/footer.php'); ?>
+<?php include('../../app/includes/footer.php'); ?>
 

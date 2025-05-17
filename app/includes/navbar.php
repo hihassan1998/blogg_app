@@ -1,13 +1,11 @@
-<?php include('./app/config/config.php')?>
+<?php include('../../app/config/config.php')?>
 <nav class="navbar">
     <button class="hamburger-menu">&#9776;</button>
-
-
 
     <ul class="navbar-menu">
         <li>
             <a href="./index.php">
-                <img class="logo" src="./public/img/logo/blog_icon.png" alt="Go to Home Page" style="width:75px;">
+                <img class="logo" src="../../public/img/logo/blog_icon.png" alt="Go to Home Page" style="width:75px;">
             </a>
         </li>
         <li><a href="./index.php">Home</a></li>
