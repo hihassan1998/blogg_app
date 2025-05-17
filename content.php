@@ -44,7 +44,7 @@ if (!$viewingUser && !empty($posts)) {
                     <br><br>
                     <a href="single_post.php?postId=<?= urlencode($post['id']) ?>" class="btn-y">Read more</a>
 
-                    <?php if ($isOwner): ?>
+                    <?php if ($isOwner && $loggedInUser['id'] === $post['userId']): ?>
                         <a href="upload.php?postId=<?= urlencode($post['id']) ?>" class="btn-g">Edit</a>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
                             <input type="hidden" name="deletePostId" value="<?= $post['id'] ?>">

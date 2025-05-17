@@ -7,7 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (!empty($username) && !empty($password)) {
+    if (empty($username)) {
+        $feedbackMessage = "❗ User name not given.";
+    } elseif (empty($password)) {
+        $feedbackMessage = "❗ Password not given.";
+    } else {
         $user = get_user($username);
 
         if (!empty($user)) {
@@ -35,8 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             $feedbackMessage = "❌ Invalid username or password.";
         }
-    } else {
-        $feedbackMessage = "❗ Both fields are required.";
     }
 }
 ?>
@@ -47,7 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <?php include('./app/includes/header.php') ?>
 
-<main class="">
+<main
+    class="">
     <?php if (!empty($feedbackMessage)): ?>
         <div
             style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"><?= htmlspecialchars($feedbackMessage) ?>
@@ -56,10 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="om-content">
         <form method="post">
             <div class="row-form yellow-font">
-                Username: <input name="username" required><br>
+                Username:
+                <input name="username" required><br>
             </div>
             <div class="row-form yellow-font">
-                Password: <input type="password" name="password" required><br>
+                Password:
+                <input type="password" name="password" required><br>
             </div>
             <button class="btn-y" type="submit">Login</button>
             <br>
@@ -69,4 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </main>
 
+<?php echo password_hash('test123', PASSWORD_DEFAULT); ?>
+
 <?php include('./app/includes/footer.php') ?>
+
