@@ -1,12 +1,12 @@
 <?php
 
 require_once '../../src/db.php';
-require_once('render_image.php');
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
+require_once('render_image.php');
 
 include('../../app/includes/header.php');
 

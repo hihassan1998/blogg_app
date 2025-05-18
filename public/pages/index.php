@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../../src/db.php');
 
 $users = get_users();
