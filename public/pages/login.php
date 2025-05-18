@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
+// include header 
 include('../../app/includes/header.php');
 ?>
 
@@ -50,14 +51,17 @@ include('../../app/includes/header.php');
     <title>Login</title>
 </head>
 
-<main
-    class="">
-    <?php if (!empty($feedbackMessage)): ?>
-        <div
-            style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"><?= htmlspecialchars($feedbackMessage) ?>
+<main>
+    <!-- display message for user to direct user and update user with input feedback  -->
+
+    <?php if (!empty($feedbackMessage)): ?><div
+            style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"> <?= htmlspecialchars($feedbackMessage) ?>
         </div>
     <?php endif; ?>
-    <div class="om-content">
+    <div
+        class="om-content">
+        <!-- user login form Post request  -->
+
         <form method="post">
             <div class="row-form yellow-font">
                 Username:
@@ -74,6 +78,6 @@ include('../../app/includes/header.php');
         </form>
     </div>
 </main>
-
+<!-- include footer  -->
 <?php include('../../app/includes/footer.php') ?>
 

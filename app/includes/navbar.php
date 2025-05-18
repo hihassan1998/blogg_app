@@ -11,6 +11,7 @@
         <li><a href="./index.php">Home</a></li>
         <li><a href="./posts.php">Blogs</a></li>
         <li><a href="./upload.php">Upload Blog</a></li>
+<!-- cehck if user is logged in to give acess to upload feature and logout button  -->
         
         <?php if (isset($_SESSION['user'])): ?>
         <li><a href="./content.php">My Posts</a></li>

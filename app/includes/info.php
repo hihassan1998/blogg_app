@@ -1,6 +1,7 @@
+<!-- display information realted to a spedific post in single_post.php  -->
+
 <?php if (isset($post)): ?>
-    <div class="post-info" style="padding: 15px; border: 1px solid #ccc;">
-        <h3>
+        <div class="post-info" style="padding: 15px; border: 1px solid #ccc;"> <h3>
             <b>
 
                 Blog Info
@@ -19,6 +20,8 @@
             <?= htmlspecialchars($post['created']) ?>
         </p>
     </div>
+
+    <!-- display message for user if unsuccessful  -->
 <?php else: ?>
     <p>❌ No data availbe to display.</p>
 <?php endif; ?>

@@ -34,8 +34,9 @@ $user = $_SESSION['user'];
             </h1>
         </div>
     </div>
-    <div class="om-content">
-
+    <div
+        class="om-content">
+        <!-- admin details -->
         <h1>Welcome to the admin dashboard !</h1>
         <h3>You are a menber of this community since:
             <?= htmlspecialchars($user['created']) ?>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../../src/db.php');
 include('../../app/includes/header.php');
 include './render_image.php';

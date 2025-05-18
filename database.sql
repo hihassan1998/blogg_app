@@ -34,7 +34,7 @@ CREATE TABLE `image` (
   `id` int(11) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `description` longtext NOT NULL,
-  `created` datetime NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
   `postId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -48,7 +48,7 @@ CREATE TABLE `post` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` longtext NOT NULL,
-  `created` datetime NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -65,7 +65,7 @@ CREATE TABLE `user` (
   `title` varchar(255) DEFAULT NULL,
   `presentation` mediumtext DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created` datetime NOT NULL
+  `created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -115,6 +115,19 @@ ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+--
+-- Alter table for online database 
+--
+ALTER TABLE `user`
+MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `post`
+MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `image`
+MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+
 -- Constraints for dumped tables
 --
 

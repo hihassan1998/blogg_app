@@ -5,6 +5,7 @@ require '../../src/db.php';
 $loggedInUser = $_SESSION['user'] ?? null;
 $viewingUser = null;
 
+// Get user id from url query
 if (isset($_GET['userId'])) {
     $viewingUserId = intval($_GET['userId']);
     $viewingUser = get_user_by_id($viewingUserId);
@@ -21,6 +22,7 @@ if (isset($_GET['userId'])) {
 }
 
 $isOwner = $loggedInUser && ($loggedInUser['id'] === $viewingUserId);
+// get posts for that specific user
 $posts = get_user_posts($viewingUserId);
 
 // Handle deletion

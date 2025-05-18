@@ -1,3 +1,5 @@
+<!-- display information realted as a clickable menu for all posts available  -->
+
 <?php if (isset($posts) && is_array($posts)): ?>
     <div class="post-list">
         <h3>All TItles</h3>

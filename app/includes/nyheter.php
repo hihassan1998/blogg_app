@@ -3,7 +3,10 @@
 // include('./app/includes/content.php') ;
 
 require_once('../../src/db.php');
+
+// get news as arrays
 $data = nyheter();
+// Set arrays to variables
 $users = $data['users'];
 $posts = $data['posts'];
 ?>
@@ -12,7 +15,10 @@ $posts = $data['posts'];
         Keep updated!
     </b>
 </h1>
+<!-- Loop through variable arrays to dispaly all posts as clickable anchor tags-->
 <h3 class="">Newly added</h3>
+<!-- display latest posts added  -->
+
 <?php foreach ($posts as $post): ?>
     <article>
         <ul class="ullist">
@@ -22,7 +28,7 @@ $posts = $data['posts'];
         </ul>
     </article>
 <?php endforeach; ?>
-
+<!--  Dispay users added -->
 <h3>New Users</h3>
 <article>
     <ul>

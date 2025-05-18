@@ -1,4 +1,5 @@
 <?php
+// start session
 session_start();
 
 require '../../src/db.php';
@@ -30,10 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $feedbackMessage = "❗ Both fields are required.";
     }
 }
-
+// Chek if user got registered and send message
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $feedbackMessage = "✅ User registered successfully!";
 }
+// include header
 include('../../app/includes/header.php');
 ?>
 
@@ -43,11 +45,11 @@ include('../../app/includes/header.php');
 </head>
 
 <main class="back-support">
-    <div
-        class="container">
-        <?php if (!empty($feedbackMessage)): ?>
-            <div
-                class="om-content" style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"><?= htmlspecialchars($feedbackMessage) ?>
+    <div class="container">
+        <!-- display message for user to direct user and update user with input feedback  -->
+
+        <?php if (!empty($feedbackMessage)): ?><div
+                class="om-content" style="color: <?= strpos($feedbackMessage, '✅') !== false ? 'green' : 'red' ?>; margin-bottom: 10px;"> <?= htmlspecialchars($feedbackMessage) ?>
             </div>
         <?php endif; ?>
 
@@ -64,6 +66,7 @@ include('../../app/includes/header.php');
         </form>
     </div>
 </main>
+<!-- include footer  -->
 
 <?php include('../../app/includes/footer.php') ?>
 
