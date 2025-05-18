@@ -1,6 +1,9 @@
 # PHP Blog App
 
 A lightweight blog application built with PHP and MySQL. Users can read blog posts, and admins can create new posts via a basic form.
+## Visual Overview
+![blogster](https://github.com/user-attachments/assets/cba7678b-7915-4c14-a758-238a64e3d545)
+
 
 ## Features
 
