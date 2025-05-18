@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if (password_verify($password, $storedHashedPassword)) {
                     // Successful login
-                    session_start();
                     $_SESSION['user'] = $user;
 
                     header("Location: admin.php");
