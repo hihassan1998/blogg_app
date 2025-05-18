@@ -1,5 +1,4 @@
 <?php
-include('../../app/includes/header.php');
 require_once '../../src/db.php';
 require_once('render_image.php');
 
@@ -7,6 +6,9 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
+
+include('../../app/includes/header.php');
+
 
 $currentUser = $_SESSION['user'];
 $userId = $currentUser['id'];

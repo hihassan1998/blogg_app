@@ -1,11 +1,11 @@
 <?php
-include('../../app/includes/header.php');
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
     // Redirect to login if not logged in
     header("Location: login.php");
     exit();
 }
+include('../../app/includes/header.php');
 
 $user = $_SESSION['user'];
 
