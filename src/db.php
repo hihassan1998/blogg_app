@@ -1,5 +1,5 @@
 <?php
-// require_once('db_credentials.php');
+require_once('db_credentials.php');
 
 var_dump(getenv('DB_SERVER'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_NAME'));
 // Koppla upp mot databasen, detta gör vi en gång när skriptet startar (sidan laddas in)
