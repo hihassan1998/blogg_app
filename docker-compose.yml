@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
+      DB_SERVER: db
       DB_USER: dbblog
       DB_PASS: P@ssw0rd
       DB_NAME: d0019e_blog
