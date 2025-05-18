@@ -1,12 +1,13 @@
 <?php
 
+session_start();
+
 require_once '../../src/db.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-session_start();
 
 require_once('render_image.php');
 
@@ -74,76 +75,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="../js/redirect.js"></script>
 <script>
     <?php if ($formSubmitted): ?>
-            redirectToContentPage();
-    <?php endif; ?>
-</script>
-
-
-<main>
-    
-
-    <div class="om-content">
-        <h1 class="blue-font"><?= $post ? "Edit Your Post (ID: " . htmlspecialchars($post['id']) . ")" : "Upload Your Content" ?>
-            <?#php echo $postId; ?>
-        </h1>
-    </div>
-
-    <?php if ($message): ?>
-        <div class="om-content">
-            <p><?= $message ?></p>
-        </div>
-    <?php endif; ?>
-
-
-    <form
-        class="om-content" method="POST" enctype="multipart/form-data">
-        <?php if ($post): ?>
-            <input
-            type="hidden" name="postId" value="<?= $post['id'] ?>">
+                    redirectToContentPage();
         <?php endif; ?>
-        <div class="row-form blue-font">
-            User:
-            <strong><?= $username ?></strong><br>
+    </script>
+    
+    
+    <main>
+        
+    
+        <div class="om-content">
+            <h1 class="blue-font"><?= $post ? "Edit Your Post (ID: " . htmlspecialchars($post['id']) . ")" : "Upload Your Content" ?>
+                <?#php echo $postId; ?>
+            </h1>
         </div>
-
-
-        <div class="row-form blue-font">
-            Title:
-            <input name="title" value="<?= $post ? htmlspecialchars($post['title']) : '' ?>" required><br>
-        </div>
-
-
-        <div class="row-form blue-font">
-            Content:
-            <textarea name="content" required><?= $post ? htmlspecialchars($post['content']) : '' ?></textarea><br>
-        </div>
-
-
-        <div class="row-form blue-font">
-            Image:
-            <input class="btn-y" type="file" name="image"><br>
-        </div>
-
-        <div
-            class="row-form blue-font">
+    
+        <?php if ($message): ?>
+                <div class="om-content">
+                    <p><?= $message ?></p>
+                </div>
+        <?php endif; ?>
+    
+    
+        <form
+            class="om-content" method="POST" enctype="multipart/form-data">
             <?php if ($post): ?>
-                <div class="row-form blue-font">
-                    <p>Current image:</p>
-
-                    <?php
-                    render_images_for_post($post['id']);
-                    ?>
-                <?php endif; ?>
+                    <input
+                    type="hidden" name="postId" value="<?= $post['id'] ?>">
+            <?php endif; ?>
+            <div class="row-form blue-font">
+                User:
+                <strong><?= $username ?></strong><br>
             </div>
-        </div>
-
-
-        <button class="btn-g" type="submit"><?= $post ? "Update Post" : "Upload Post" ?></button>
-    </form>
-
-
-</main>
-<?php
-include('../../app/includes/footer.php'); ?>
-
+    
+    
+            <div class="row-form blue-font">
+                Title:
+                <input name="title" value="<?= $post ? htmlspecialchars($post['title']) : '' ?>" required><br>
+            </div>
+    
+    
+            <div class="row-form blue-font">
+                Content:
+                <textarea name="content" required><?= $post ? htmlspecialchars($post['content']) : '' ?></textarea><br>
+            </div>
+    
+    
+            <div class="row-form blue-font">
+                Image:
+                <input class="btn-y" type="file" name="image"><br>
+            </div>
+    
+            <div
+                class="row-form blue-font">
+                <?php if ($post): ?>
+                        <div class="row-form blue-font">
+                            <p>Current image:</p>
+    
+                            <?php
+                            render_images_for_post($post['id']);
+                            ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+    
+    
+            <button class="btn-g" type="submit"><?= $post ? "Update Post" : "Upload Post" ?></button>
+        </form>
+    
+    
+    </main>
+    <?php
+    include('../../app/includes/footer.php'); ?>
 
