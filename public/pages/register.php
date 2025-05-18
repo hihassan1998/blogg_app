@@ -1,5 +1,5 @@
 <?php
-include('../../app/includes/header.php');
+
 require '../../src/db.php';
 
 
@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $feedbackMessage = "✅ User registered successfully!";
 }
+include('../../app/includes/header.php');
 ?>
 
 <head>
