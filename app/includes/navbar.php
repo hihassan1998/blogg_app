@@ -1,4 +1,4 @@
-<?php include('../../app/config/config.php')?>
+<?#php include('../../app/config/config.php')?>
 <nav class="navbar">
     <button class="hamburger-menu">&#9776;</button>
 

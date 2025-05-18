@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require '../../src/db.php';
 
 $loggedInUser = $_SESSION['user'] ?? null;

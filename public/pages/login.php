@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require '../../src/db.php';
 
 $feedbackMessage = '';

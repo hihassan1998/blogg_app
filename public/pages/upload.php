@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once '../../src/db.php';
 require_once('render_image.php');
 
