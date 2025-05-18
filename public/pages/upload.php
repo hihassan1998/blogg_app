@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $filename = null;
     if (!empty($_FILES["image"]["name"])) {
         $filename = basename($_FILES["image"]["name"]);
-        move_uploaded_file($_FILES["image"]["tmp_name"], "uploads/$filename");
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../../uploads/$filename");
     }
 
     if (isset($_POST['postId'])) {
