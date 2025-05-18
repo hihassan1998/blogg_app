@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include('../../app/includes/header.php');
 
 include('./load_posts.php');
