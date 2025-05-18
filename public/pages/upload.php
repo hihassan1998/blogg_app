@@ -6,6 +6,8 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
+session_start();
+
 require_once('render_image.php');
 
 include('../../app/includes/header.php');
