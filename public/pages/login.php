@@ -1,5 +1,5 @@
 <?php
-include('../../app/includes/header.php');
+
 require '../../src/db.php';
 
 $feedbackMessage = '';
@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
+include('../../app/includes/header.php');
 ?>
 
 <head>
