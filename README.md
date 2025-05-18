@@ -1,6 +1,7 @@
 # PHP Blog App
 
 A lightweight blog application built with PHP and MySQL. Users can read blog posts, and admins can create new posts via a basic form.
+
 ## Visual Overview
 ![blogster](https://github.com/user-attachments/assets/cba7678b-7915-4c14-a758-238a64e3d545)
 
@@ -21,3 +22,6 @@ sql/d0019e_blog.sql
 3. Place the project in your web server (e.g., XAMPP's `htdocs`).
 4. Access it via:
 http://localhost/bloggprojekt/index.php
+
+## Deployment
+Demo: https://blogg-app-899r.onrender.com/public/pages/index.php
