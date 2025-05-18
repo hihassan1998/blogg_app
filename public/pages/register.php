@@ -1,7 +1,6 @@
 <?php
-require '../../src/db.php';
-
 include('../../app/includes/header.php');
+require '../../src/db.php';
 
 
 $feedbackMessage = '';
