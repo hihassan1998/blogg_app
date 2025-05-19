@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
         
         
-<main class="main">
+<main class="container">
     
 
     <div class="om-content">
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="row-form blue-font">
             Content:
-            <textarea name="content" required><?= $post ? htmlspecialchars($post['content']) : '' ?></textarea><br>
+            <textarea class="mob-textarea " name="content" required><?= $post ? htmlspecialchars($post['content']) : '' ?></textarea><br>
         </div>
 
 

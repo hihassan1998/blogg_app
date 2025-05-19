@@ -298,6 +298,7 @@ ul {
 }
 
 form .input {
+    width: -webkit-fill-available;
     margin-bottom: 50px;
 }
 
@@ -385,6 +386,15 @@ a {
     .post-container {
         display: flex !important;
         flex-direction: column;
+    }
+
+    .input {
+        width: -webkit-fill-available;
+    }
+
+    textarea.mob-textarea {
+        width: -webkit-fill-available;
+        height: 150px;
     }
 }
 
