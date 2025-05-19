@@ -312,6 +312,7 @@ form .input {
     text-decoration: none;
     padding: 7px;
 }
+
 .btn-r {
     color: #000000;
     background-color: #ff0000;
@@ -323,12 +324,13 @@ form .input {
     text-decoration: none;
     padding: 7px;
 }
- .btn-r:hover {
+
+.btn-r:hover {
     color: #FFFFFF;
     background-color: #e10000;
 
     cursor: pointer;
- }
+}
 
 a {
     text-decoration: none;
@@ -358,6 +360,7 @@ a {
     /* font-weight: 600; */
 }
 
+
 .part {
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
@@ -366,6 +369,25 @@ a {
     gap: 25px;
     align-items: center;
 }
+
+/* Responsive design */
+@media (max-width: 786px) {
+    .contactlayout {
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    aside {
+        position: relative !important;
+        max-width: 100% !important;
+    }
+
+    .post-container {
+        display: flex !important;
+        flex-direction: column;
+    }
+}
+
 
 /* contact styling ends */
 
@@ -429,7 +451,7 @@ aside a {
     list-style-type: circle;
 }
 
-article{
+article {
     padding: 0.3rem;
 }
 
@@ -437,9 +459,11 @@ article{
     text-align: center;
     margin: 0 auto;
 }
+
 ol a {
     color: #000000;
 }
+
 ol a:hover {
-    color:red;
+    color: red;
 }

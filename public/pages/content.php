@@ -21,7 +21,7 @@ if (!$viewingUser && !empty($posts)) {
 
 ?>
 
-<main>
+<main class="container">
 
     <?php if (empty($posts)): ?>
         <div class="om-content">
@@ -49,7 +49,8 @@ if (!$viewingUser && !empty($posts)) {
                     <?php if ($isOwner && $loggedInUser['id'] === $post['userId']): ?>
                         <a href="upload.php?postId=<?= urlencode($post['id']) ?>" class="btn-g">Edit</a>
                         <!-- Delte the post form using delete_post.php-->
-                        <form method="POST" action="delete_post.php" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        <form method="POST" action="delete_post.php" style="display:inline;"
+                            onsubmit="return confirm('Are you sure you want to delete this post?');">
                             <input type="hidden" name="deletePostId" value="<?= $post['id'] ?>">
                             <button type="submit" class="btn-r">Delete</button>
                         </form>
@@ -60,3 +61,6 @@ if (!$viewingUser && !empty($posts)) {
     <?php endif; ?>
 </main>
 
+<?php
+// include footer
+include('../../app/includes/header.php'); ?>

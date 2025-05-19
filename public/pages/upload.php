@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
         
         
-<main>
+<main class="main">
     
 
     <div class="om-content">

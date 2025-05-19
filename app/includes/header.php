@@ -8,7 +8,8 @@
     <meta name="referrer" content="unsafe-url">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- favicon for browser logo image -->
-    <link rel="icon" href="./public/img/logo/blog_icon.png" type="image/png">
+    <link rel="icon" href="../../public/img/logo/blog_icon.png" type="image/png">
+    <link rel="icon" href="/public/img/logo/blog_icon.png" type="image/png">
     <!-- css stylesheets linking -->
     <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="../../public/css/navbar.css">
