@@ -63,4 +63,4 @@ if (!$viewingUser && !empty($posts)) {
 
 <?php
 // include footer
-include('../../app/includes/header.php'); ?>
+include('../../app/includes/footer.php'); ?>

@@ -14,6 +14,9 @@ A lightweight blog application built with PHP and MySQL. Users can read blog pos
 - Simple and clean design
 - PDO-based database connection
 
+## Database
+My SQ databse is used and hosted on: www.freesqldatabase.com
+![Er diagram](erblog.png)
 ## Setup
 
 1. Import the SQL file:
