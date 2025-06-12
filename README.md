@@ -15,8 +15,12 @@ A lightweight blog application built with PHP and MySQL. Users can read blog pos
 - PDO-based database connection
 
 ## Database
-My SQ databse is used and hosted on: www.freesqldatabase.com
-![Er diagram](erblog.png)
+The application uses a MySQL database hosted on **Azure Database for MySQL**.
+- Import the schema from `sql/d0019e_blog.sql`.
+- Configure your database credentials and server name in your environment or `db.php` file.
+- Make sure to use SSL for secure connection.
+
+![Er diagram](erblog.png)The application uses a MySQL database hosted on **Azure Database for MySQL**.
 ## Setup
 
 1. Import the SQL file:
