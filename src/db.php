@@ -6,7 +6,7 @@ define('DB_USER', getenv('DB_USER') ?: 'sql7779546');
 define('DB_PASS', getenv('DB_PASS') ?: 'p36wgUVX8Q');
 define('DB_NAME', getenv('DB_NAME') ?: 'd0019e_blog');
 
-var_dump(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+// var_dump(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
 // $certPath = __DIR__ . '../../src/cert/BaltimoreCyberTrustRoot.crt.pem';
 $certPath = __DIR__ . '/cert/BaltimoreCyberTrustRoot.crt.pem';
