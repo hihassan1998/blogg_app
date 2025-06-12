@@ -1,13 +1,35 @@
 <?php
 // require_once('db_credentials.php');
-define('DB_SERVER', getenv('DB_SERVER') ?: 'sql7.freesqldatabase.com');
+// define('DB_SERVER', getenv('DB_SERVER') ?: 'sql7.freesqldatabase.com');
+define('DB_SERVER', getenv('DB_SERVER') ?: 'dbblogserver.mysql.database.azure.com');
 define('DB_USER', getenv('DB_USER') ?: 'sql7779546');
 define('DB_PASS', getenv('DB_PASS') ?: 'p36wgUVX8Q');
-define('DB_NAME', getenv('DB_NAME') ?: 'sql7779546');
+define('DB_NAME', getenv('DB_NAME') ?: 'd0019e_blog');
 
-// var_dump(getenv('DB_SERVER'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_NAME'));
+var_dump(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+
+// $certPath = __DIR__ . '../../src/cert/BaltimoreCyberTrustRoot.crt.pem';
+$certPath = __DIR__ . '/cert/BaltimoreCyberTrustRoot.crt.pem';
+// var_dump(file_exists($certPath));
+
 // Koppla upp mot databasen, detta gör vi en gång när skriptet startar (sidan laddas in)
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+// $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+$connection = mysqli_init();
+
+// Path to your SSL cert
+
+// mysqli_ssl_set($connection, null, null, $certPath, null, null);
+
+mysqli_real_connect(
+    $connection,
+    DB_SERVER,
+    DB_USER,
+    DB_PASS,
+    DB_NAME,
+    3306,
+    null,
+    MYSQLI_CLIENT_SSL
+);
 
 function add_user($username, $password)
 {

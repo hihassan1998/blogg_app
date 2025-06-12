@@ -20,37 +20,15 @@ SET time_zone = "+00:00";
 --
 -- Database: `sql7779546`
 --
-use sql7779546;
+CREATE DATABASE IF NOT EXISTS d0019e_blog;
+USE d0019e_blog;
 -- --------------------------------------------------------
 -- Delete tables
 DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS user;
---
--- Table structure for table `image`
---
-
-CREATE TABLE `image` (
-  `id` int(11) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `description` longtext NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `postId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `post`
---
-
-CREATE TABLE `post` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` longtext NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `userId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -59,14 +37,47 @@ CREATE TABLE `post` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `presentation` mediumtext DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp()
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- -------------------------------------------------------
+--
+-- Table structure for table `post`
+--
+
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `content` longtext NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+--
+-- Table structure for table `image`
+--
+
+CREATE TABLE `image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `postId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `postId` (`postId`),
+  CONSTRAINT `image_ibfk_1` FOREIGN KEY (`postId`) REFERENCES `post` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Indexes for dumped tables
@@ -75,22 +86,22 @@ CREATE TABLE `user` (
 --
 -- Indexes for table `image`
 --
-ALTER TABLE `image`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `postId` (`postId`) USING BTREE;
+-- ALTER TABLE `image`
+--  ADD PRIMARY KEY (`id`),
+--   ADD KEY `postId` (`postId`) USING BTREE;
 
 --
 -- Indexes for table `post`
 --
-ALTER TABLE `post`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `userId` (`userId`);
+-- ALTER TABLE `post`
+--   ADD PRIMARY KEY (`id`),
+--   ADD KEY `userId` (`userId`);
 
 --
 -- Indexes for table `user`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+-- ALTER TABLE `user`
+--   ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -99,33 +110,33 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for table `image`
 --
-ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+-- ALTER TABLE `image`
+--   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `post`
 --
-ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+-- ALTER TABLE `post`
+--   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+-- ALTER TABLE `user`
+--   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 --
 -- Alter table for online database 
 --
-ALTER TABLE `user`
-MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+-- ALTER TABLE `user`
+-- MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
-ALTER TABLE `post`
-MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+-- ALTER TABLE `post`
+-- MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
-ALTER TABLE `image`
-MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+-- ALTER TABLE `image`
+-- MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 
 -- Constraints for dumped tables
@@ -134,15 +145,15 @@ MODIFY COLUMN `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 --
 -- Constraints for table `image`
 --
-ALTER TABLE `image`
-  ADD CONSTRAINT `image_ibfk_1` FOREIGN KEY (`postId`) REFERENCES `post` (`id`);
+-- ALTER TABLE `image`
+--  ADD CONSTRAINT `image_ibfk_1` FOREIGN KEY (`postId`) REFERENCES `post` (`id`);
 
 --
 -- Constraints for table `post`
 --
-ALTER TABLE `post`
-  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
-COMMIT;
+-- ALTER TABLE `post`
+--   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
+-- COMMIT;
 
 --
 -- Insert data into tables
